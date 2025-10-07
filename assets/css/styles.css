@@ -105,7 +105,10 @@ html {
 .hero-img {
   width: 100%;
   height: 100%;
-  background-image: url('../images/hero-gold.jpg');
+  background-image: image-set(
+    url('../images/hero-gold-1920.webp') type('image/webp'),
+    url('../images/hero-gold.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-position: center;
   filter: saturate(0.9) contrast(1.05);
@@ -119,10 +122,23 @@ html {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
 }
 .about-media {
-  background-image: url('../images/nairobi-dusk.jpg');
+  background-image: image-set(
+    url('../images/nairobi-dusk-1280.webp') type('image/webp'),
+    url('../images/nairobi-dusk.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-position: center;
   aspect-ratio: 16/10;
+}
+
+/* Prefer smaller hero source on narrower screens */
+@media (max-width: 1024px) {
+  .hero-img {
+    background-image: image-set(
+      url('../images/hero-gold-1280.webp') type('image/webp'),
+      url('../images/hero-gold.jpg') type('image/jpeg')
+    );
+  }
 }
 .about-caption {
   padding: .85rem 1rem;
