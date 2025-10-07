@@ -1,4 +1,5 @@
-assets/images/
+# Keep images under version control for deployment
+# (remove the line below that previously ignored images)
 *.DS_Store
 node_modules/
 dist/
