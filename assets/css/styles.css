@@ -40,6 +40,30 @@ html {
   .step { padding: 1rem; }
 }
 
+/* Mobile full-screen snap scrolling */
+@media (max-width: 768px) {
+  html, body { height: 100%; }
+  body {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Account for fixed header (48px) */
+  .section, #home {
+    min-height: calc(100vh - 48px);
+    display: flex;
+    align-items: center;
+  }
+  .section { scroll-snap-align: start; }
+  /* Hide the thin divider band on small screens */
+  #expertise { display: none; }
+}
+
+/* Smooth fade transitions between sections on mobile */
+@media (max-width: 768px) {
+  .section, #home { transition: opacity 400ms ease, transform 400ms ease; }
+}
+
 /* Nav links */
 .nav-link {
   color: rgba(207, 210, 214, 0.9);
