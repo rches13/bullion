@@ -37,6 +37,90 @@
 
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
+  // Intro sand particles sprinkling (one-time)
+  const sandCanvas = document.getElementById('intro-sand');
+  if (sandCanvas) {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced) {
+      const ctx = sandCanvas.getContext('2d');
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = sandCanvas.getBoundingClientRect();
+      sandCanvas.width = rect.width * DPR;
+      sandCanvas.height = rect.height * DPR;
+      sandCanvas.style.width = rect.width + 'px';
+      sandCanvas.style.height = rect.height + 'px';
+      ctx.scale(DPR, DPR);
+      ctx.globalCompositeOperation = 'lighter';
+
+      const particles = [];
+      const PARTICLE_COUNT = 360; // denser for visibility
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * rect.width,
+          // Start within the top 25% of the hero so they are visible immediately
+          y: Math.random() * (rect.height * 0.25) - 10,
+          size: Math.random() * 1.6 + 1.0,
+          // Fall a bit faster so motion is noticeable at once
+          speedY: Math.random() * 1.2 + 1.0,
+          speedX: (Math.random() - 0.5) * 0.8,
+          // Shorter life so they fade naturally
+          life: 70 + Math.random() * 40
+        });
+      }
+
+      let frame = 0;
+      function draw() {
+        frame++;
+        ctx.clearRect(0, 0, rect.width, rect.height);
+        for (const p of particles) {
+          p.y += p.speedY;
+          p.x += p.speedX + Math.sin((p.y + frame) * 0.02) * 0.4;
+          p.life -= 1;
+          const opacity = Math.max(0, Math.min(1, p.life / 100));
+
+          ctx.beginPath();
+          ctx.shadowColor = 'rgba(212,175,55,0.35)';
+          ctx.shadowBlur = 6;
+          ctx.fillStyle = `rgba(212,175,55,${0.65 * opacity})`;
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+        if (frame < 220) requestAnimationFrame(draw); else sandCanvas.remove();
+      }
+      // Render first frame immediately so particles are visible without delay
+      draw();
+      requestAnimationFrame(draw);
+    } else {
+      sandCanvas.remove();
+    }
+  }
+
+  // Active nav underline on scroll
+  const sectionsForNav = [
+    { id: '#about', link: 'a[href="#about"]' },
+    { id: '#process', link: 'a[href="#process"]' },
+    { id: '#why', link: 'a[href="#why"]' },
+    { id: '#contact', link: 'a[href="#contact"]' }
+  ];
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const item = sectionsForNav.find(s => s.id === '#' + entry.target.id);
+      if (!item) return;
+      const link = document.querySelector(item.link);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.6 });
+
+  sectionsForNav.forEach(s => {
+    const el = document.querySelector(s.id);
+    if (el) navObserver.observe(el);
+  });
+
   // Progress bar
   const progressBar = document.getElementById('progress-bar');
   if (progressBar) {

@@ -158,6 +158,56 @@ html {
   will-change: transform;
 }
 
+/* Gold foil/grain overlay */
+.foil-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(212,175,55,0.15), transparent 40%),
+    radial-gradient(ellipse at 80% 20%, rgba(212,175,55,0.12), transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(212,175,55,0.1), transparent 45%);
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Refined CTA shimmer */
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+}
+.btn-gold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.15) 20%, transparent 40%);
+  transform: skewX(-20deg);
+  transition: left 800ms ease;
+}
+.btn-gold:hover::after { left: 150%; }
+
+/* Nav active underline that glides */
+.nav-link {
+  position: relative;
+}
+.nav-link.active:after {
+  width: 100%;
+}
+
+/* Staggered reveals */
+.reveal { transition-delay: 60ms; }
+.reveal:nth-child(2) { transition-delay: 120ms; }
+.reveal:nth-child(3) { transition-delay: 180ms; }
+.reveal:nth-child(4) { transition-delay: 240ms; }
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
 /* About media card */
 .about-card {
   border: 1px solid rgba(212,175,55,.18);
@@ -317,6 +367,15 @@ html {
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+
+/* Intro gold dust reveal overlay */
+/* Intro sand canvas overlay */
+.intro-sand {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
 }
 
 /* Hover reveals */
