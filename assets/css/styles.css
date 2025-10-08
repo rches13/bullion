@@ -52,6 +52,10 @@ html {
   /* tighten spacing specifically between trust and stats sections */
   .trust-section { padding-bottom: 1.25rem; }
   .stats-section { padding-top: 1.25rem; }
+  /* override large bottom margin inside trust section heading wrapper */
+  .trust-section .mb-12 { margin-bottom: 0.5rem; }
+  /* tighten grid gaps for stats on small screens */
+  .stats-section .grid { gap: 0.75rem; }
   .trust-badge {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
