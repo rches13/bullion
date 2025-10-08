@@ -49,6 +49,9 @@ html {
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
+  /* tighten spacing specifically between trust and stats sections */
+  .trust-section { padding-bottom: 1.25rem; }
+  .stats-section { padding-top: 1.25rem; }
   .trust-badge {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
