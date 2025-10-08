@@ -118,7 +118,7 @@
     });
   });
 
-  // Form submission with Formspree
+  // Form submission with email link
   const form = document.querySelector('.contact-form');
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -132,36 +132,25 @@
         return;
       }
 
-      // Show loading state
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Sending...';
-      submitBtn.disabled = true;
+      // Get form data
+      const name = data.get('name');
+      const email = data.get('email');
+      const whatsapp = data.get('whatsapp') || 'Not provided';
+      const message = data.get('message');
 
-      // Submit to Formspree
-      fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          alert('Thank you. Your inquiry has been sent. We will reach out discreetly.');
-          form.reset();
-        } else {
-          throw new Error('Form submission failed');
-        }
-      })
-      .catch(error => {
-        alert('There was an error sending your message. Please try again or contact us directly.');
-        console.error('Form error:', error);
-      })
-      .finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      });
+      // Create email subject and body
+      const subject = `New Inquiry from ${name}`;
+      const body = `Name: ${name}\nEmail: ${email}\nWhatsApp: ${whatsapp}\n\nMessage:\n${message}`;
+
+      // Create mailto link
+      const mailtoLink = `mailto:rodgerschesoni@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Open email client
+      window.location.href = mailtoLink;
+      
+      // Show success message
+      alert('Your email client will open with the inquiry details. Please send the email to complete your inquiry.');
+      form.reset();
     });
   }
 })();
