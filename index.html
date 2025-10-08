@@ -50,8 +50,16 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   </head>
   <body class="bg-charcoal text-platinum font-body antialiased selection:bg-gold/20 selection:text-ivory">
+    <!-- Gold particles background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Progress bar -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-charcoal/20 z-50">
+      <div class="h-full bg-gradient-to-r from-gold/60 to-gold transition-all duration-300 ease-out" id="progress-bar"></div>
+    </div>
+
     <!-- Navigation -->
-    <header class="fixed top-0 inset-x-0 z-50 border-b border-gold/10 backdrop-blur supports-[backdrop-filter]:bg-charcoal/70">
+    <header class="fixed top-1 inset-x-0 z-50 border-b border-gold/10 backdrop-blur supports-[backdrop-filter]:bg-charcoal/70">
       <div class="max-w-7xl mx-auto px-6 md:px-8">
         <div class="flex items-center justify-between h-12">
           <a href="#home" class="group inline-flex items-center gap-3">
@@ -78,7 +86,7 @@
       <div class="max-w-7xl mx-auto px-6 md:px-8 py-24 md:py-36 flex items-center min-h-[50vh] md:min-h-0">
         <div class="max-w-3xl">
           <h1 class="font-display text-4xl md:text-6xl leading-tight text-ivory">
-            Verified Gold. Global Trust. From Nairobi to You.
+            <span class="gradient-text">Verified Gold.</span> Global Trust. From Nairobi to You.
           </h1>
           <p class="mt-6 text-lg md:text-xl text-platinum/90">We deliver not just gold, but certainty—crafted for the discerning.</p>
           <div class="mt-10 flex flex-wrap gap-4">
@@ -109,9 +117,12 @@
             <p class="mt-4 text-platinum/80">Every relationship is discreet. Every process is transparent. Every delivery is engineered for certainty.</p>
           </div>
           <div class="reveal">
-            <div class="about-card">
+            <div class="about-card hover-reveal">
               <div class="about-media"></div>
               <div class="about-caption">Nairobi, Kenya — Gateway to global trade corridors</div>
+              <div class="hover-content">
+                <p class="text-sm text-platinum/80">Strategic location for East African gold sourcing and international logistics coordination.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -149,8 +160,89 @@
       </div>
     </section>
 
+    <!-- Trust Badges -->
+    <section class="section bg-ink/30">
+      <div class="container">
+        <div class="text-center mb-12">
+          <h3 class="text-lg text-platinum/80 mb-8">Trusted by Leading Institutions</h3>
+          <div class="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <div class="trust-badge">LBMA Certified</div>
+            <div class="trust-badge">OECD Compliant</div>
+            <div class="trust-badge">ISO 9001</div>
+            <div class="trust-badge">Responsible Sourcing</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="section bg-ink/50">
+      <div class="container">
+        <div class="grid md:grid-cols-4 gap-8 text-center">
+          <div class="stat-item reveal">
+            <div class="stat-number" data-target="500">0</div>
+            <div class="stat-label">Gold Bars Delivered</div>
+          </div>
+          <div class="stat-item reveal">
+            <div class="stat-number" data-target="25">0</div>
+            <div class="stat-label">Countries Served</div>
+          </div>
+          <div class="stat-item reveal">
+            <div class="stat-number" data-target="99.9">0</div>
+            <div class="stat-label">% Purity Guaranteed</div>
+          </div>
+          <div class="stat-item reveal">
+            <div class="stat-number" data-target="48">0</div>
+            <div class="stat-label">Hour Delivery Window</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title text-center">Client Testimonials</h2>
+        <div class="mt-12">
+          <div class="testimonial-carousel">
+            <div class="testimonial-slide active">
+              <blockquote class="testimonial-quote">
+                "Auric Ventures delivers exceptional service with uncompromising integrity. Their CIF process is flawless."
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-name">— M. Chen, Refinery Director</div>
+                <div class="author-company">Singapore Gold Refinery</div>
+              </div>
+            </div>
+            <div class="testimonial-slide">
+              <blockquote class="testimonial-quote">
+                "Discreet, reliable, and transparent. They've become our trusted partner for East African gold sourcing."
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-name">— J. Williams, Investment Director</div>
+                <div class="author-company">Private Wealth Management</div>
+              </div>
+            </div>
+            <div class="testimonial-slide">
+              <blockquote class="testimonial-quote">
+                "The documentation and compliance standards exceed our expectations. Highly recommended for institutional clients."
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-name">— A. Kumar, Compliance Officer</div>
+                <div class="author-company">International Trading House</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-controls">
+            <button class="testimonial-btn prev" onclick="changeTestimonial(-1)">‹</button>
+            <button class="testimonial-btn next" onclick="changeTestimonial(1)">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Why Choose Us -->
-    <section id="why" class="section">
+    <section id="why" class="section bg-ink/30">
       <div class="container">
         <h2 class="section-title text-center">Excellence You Can Trust.</h2>
         <div class="mt-12 grid md:grid-cols-2 gap-8">
@@ -229,6 +321,18 @@
         <div class="text-platinum/60 text-sm">CIF • Verified Doré • Discreet • Global</div>
       </div>
     </footer>
+
+    <!-- Floating Contact Button -->
+    <div class="fixed bottom-6 right-6 z-40">
+      <a href="#contact" class="floating-cta group">
+        <div class="floating-cta-inner">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          <span class="floating-cta-text">Contact</span>
+        </div>
+      </a>
+    </div>
 
     <script src="assets/js/main.js"></script>
   </body>
