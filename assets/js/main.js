@@ -118,7 +118,7 @@
     });
   });
 
-  // Minimal client-side form UX (no submission backend wired)
+  // Form submission with Formspree
   const form = document.querySelector('.contact-form');
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -126,12 +126,42 @@
       const data = new FormData(form);
       const required = ['name', 'email', 'message'];
       const missing = required.filter((k) => !String(data.get(k) || '').trim());
+      
       if (missing.length) {
         alert('Please complete the required fields.');
         return;
       }
-      alert('Thank you. Your inquiry has been noted. We will reach out discreetly.');
-      form.reset();
+
+      // Show loading state
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+
+      // Submit to Formspree
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Thank you. Your inquiry has been sent. We will reach out discreetly.');
+          form.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(error => {
+        alert('There was an error sending your message. Please try again or contact us directly.');
+        console.error('Form error:', error);
+      })
+      .finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      });
     });
   }
 })();
